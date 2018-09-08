@@ -1,5 +1,6 @@
 #ifndef UTILS_H
 #define UTILS_H
+#include <stdbool.h>
 
 typedef struct aresta aresta;
 
@@ -17,8 +18,24 @@ int euclideana(float* x, float* y, int i, int j);
 *pre-condicao: os vetores devem possuir pelo menos 2 elementos
 *pos-condicao: matriz de inteiros devidamente alocada com N*(N-1)/2 elementos
 */
-int** gera_distancias(float* x, float* y, int N);
+aresta* gera_distancias(float* x, float* y, int N);
 
 /**/
+//bool compara_aresta(aresta a, aresta b)
+
+/**/
+void quicksort(aresta* arestas, int inicio, int fim);
+
+int retorna_peso(aresta* a, int i);
+
+int retorna_i(aresta* a, int i);
+
+int retorna_j(aresta* a, int i);
+
+aresta* kruskal(float* x, float* y, int N);
+
+int* caminha(aresta* a, int N);
+
+int* tour_otimo(aresta* a, int N);
 
 #endif

@@ -1,69 +1,43 @@
+#include "utils.h"
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include "io.h"
 
-typedef struct city {
-    int node_id;
-    float x;
-    float y;
-} tCity;
-
-typedef struct io {
-    char* name;
-    char* type;
-    int dimension;
-} tIO;
-
-int main(int argc, char** argv) {
+int main(int argc, char** argv){
     
-    tIO input;
-    char nome[100];
-    char type[100];
-    char dimension[100];
-    char buffer[100];
-    char num[100], x[100], y[100];
-    char* diretorio = argv[1];
-    FILE *arq = fopen(diretorio, "r");
+    int N = atoi(argv[1]);
+    int num_arestas = N*(N-1)/2;
+    float* x;
+    float* y;
+    x = malloc(N*sizeof(*x));
+    y = malloc(N*sizeof(*y));
+    for (int i = 0; i < N; i++)
+        scanf("%f %f\n", &x[i], &y[i]);
+    printf("vetor x: ");
+    for (int i = 0; i < N; i++)
+        printf("%f ", x[i]);
+    printf("\nvetor y: ");
+    for (int i = 0; i < N; i++)
+        printf("%f ", y[i]);
+    
+    printf("\n");
+    //aresta* d = gera_distancias(x, y, N);
 
-    if (argc < 2) { // caso nao coloque o nome do arquivo de entrada
-        printf("Não colocou o nome do arquivo.");
-        exit(1);
+    /*for (int i = 0; i < num_arestas; i++){
+        printf("Aresta %d %d: %d\n", retorna_i(d,i), retorna_j(d,i), retorna_peso(d,i));
+        
+    }*/
+    printf("\n");
+    //quicksort(d, 0, num_arestas);
+    aresta* d = kruskal(x, y, N);
+    for (int i = 0; i < N-1; i++){
+        printf("Aresta %d %d: %d\n", retorna_i(d,i), retorna_j(d,i), retorna_peso(d,i));
+        
     }
-    if (arq == NULL) { // caso nao consiga abrir o arquivo
-        printf("Não foi possível abrir o arquivo.");
-        exit(1);
-    } else {
-        //le o nome
-        fscanf(arq, "NAME: %s\n", nome);
-        //pula as linhas de comentario
-        do {
-            fscanf(arq, "%s", buffer);
-        } while (strcmp("TYPE:", buffer) != 0);
-        //le o tipo
-        fscanf(arq, "%s\n", type);
-        //le a dimensao
-        fscanf(arq, "DIMENSION: %s\n", dimension);
-        //pula linha edge weight type
-        fgets(buffer, 100, arq);
-        //pula linha do node coord section
-        fgets(buffer, 100, arq);
-
-        printf("%s\n", nome);
-        printf("%s\n", type);
-        printf("%s\n", dimension);
-
-        tCity cidades[atoi(dimension)];
-        int idx = 0;
-        while (fscanf(arq, "%s %s %s", &num, &x, &y) == 3) {
-            cidades[idx].node_id = atoi(num);
-            cidades[idx].x = atof(x);
-            cidades[idx].y = atof(y);
-            printf("%d %.1f %.1f\n", cidades[idx].node_id, cidades[idx].x, cidades[idx].y);
-            idx++;
-        }
-
-    }
-    fclose(arq);
-    return (EXIT_SUCCESS);
+    
+    gera_mst(d, N, "berlin52");
+    
+    caminha(d, N);
+    
+    return 0;
 }
-
