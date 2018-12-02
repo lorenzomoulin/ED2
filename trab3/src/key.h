@@ -2,10 +2,16 @@
 #define KEY_H
 #include <stdbool.h>
 
-#define C 5          // Número de caracteres na senha.
+#define C 6      // Número de caracteres na senha.
 #define B 5          // Número de bits por caractere.
 #define R (1 << B)   // Tamanho do alfabeto (sempre = 32).
 #define N (B * C)    // Número de bits por senha.
+#define MAX (1 << 29) // Quantidade de subconjuntos máxima
+
+
+typedef unsigned char uc;
+typedef long long ll;
+
 
 #define ALPHABET "abcdefghijklmnopqrstuvwxyz012345"
 

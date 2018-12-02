@@ -44,8 +44,8 @@ int main(int argc, char *argv[]) {
     printf("\n   ");
     print_key(encrypted);
     printf("\n");
-    for(int i = 0; i < N; i++)
-        print_key(T[i]);
+    //for(int i = 0; i < N; i++)
+      //  print_key(T[i]);
 
     return 0;
 }

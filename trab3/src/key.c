@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include "key.h"
 
+
 // Inicializa e retorna uma chave a partir do vetor de char dado.
 // Exemplo: s = "abcdwxyz"  =>  k = 0 1 2 3 22 23 24 25
 Key init_key(unsigned char s[]) {
@@ -70,8 +71,10 @@ Key subset_sum(Key k, Key T[N]) {
             sum = add(sum, T[i]);
             //printf("%2d ", i);           // Para teste.
             //print_key(T[i]);             // Para teste.
+            
         }
     }
+    //printf("\n\n");
    return sum;
 }
 

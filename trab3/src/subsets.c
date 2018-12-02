@@ -1,9 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "key.h"
+#include <time.h>
 
-typedef unsigned char uc;
-typedef long long ll;
 
 void decrypt(uc *enc_pass, Key T[N]){
     Key enc = init_key(enc_pass);
@@ -13,9 +12,8 @@ void decrypt(uc *enc_pass, Key T[N]){
     Key unity = init_key(temp);
     temp[C - 1] = 'a';
     Key sum = init_key(temp);
-    int max = 1 << 5*C;
-    for (int i = 0; i < max; i++){
-        Key temp2 = init_key(sum.digit);
+    for (ll i = 0; i < MAX; i++){
+        Key temp2;
         temp2 = subset_sum(sum, T);
         if(compare(temp2, enc))   print_key_char(sum);
         sum = add(sum, unity);
@@ -23,8 +21,8 @@ void decrypt(uc *enc_pass, Key T[N]){
 }
 
 int main(int argc, char** argv){
-    Key password;                  // A senha fornecida pelo usuário.
-    Key encrypted;                 // A senha criptografada.
+    //Key password;                  // A senha fornecida pelo usuário.
+    //Key encrypted;                 // A senha criptografada.
     Key T[N];                      // A tabela T.
 
     if (argc != 2) {
@@ -39,7 +37,7 @@ int main(int argc, char** argv){
     //printf("\n");
 
     // Lê a tabela T.
-    unsigned char buffer[C+1];     // Buffer temporário.
+    uc buffer[C+1];     // Buffer temporário.
     for (int i = 0; i < N; i++) {
         scanf("%s", buffer);
         T[i] = init_key(buffer);
@@ -47,7 +45,10 @@ int main(int argc, char** argv){
 
     // Calcula a soma de subconjunto.
     //encrypted = subset_sum(password, T);
-    decrypt(argv[1], T);
+    clock_t init = clock();
+    decrypt((uc*)argv[1], T);
+    clock_t end = clock();
+    printf("tempo de execucao com %d caracteres: %.3f\n", C, (double)(end-init)/CLOCKS_PER_SEC);
     // Exibe o resultado.
     //printf("\n   ");
     //print_key(encrypted);
